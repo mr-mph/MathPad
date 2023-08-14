@@ -1,3 +1,4 @@
+const styleSheet = document.getElementsByTagName("style")[0].sheet;
 const mathArea = document.getElementById("math-area");
 const clearBtn = document.getElementById("clear-btn");
 const addBtn = document.getElementById("add-btn");
@@ -45,9 +46,14 @@ const switchIcon = (oldIcon, newIcon) =>
 themeBtn.onclick = () => {
   if (root.style.colorScheme == "dark") {
     root.style.colorScheme = "light";
+    styleSheet.deleteRule(styleSheet.length - 1);
     switchIcon("sun", "moon");
   } else {
     root.style.colorScheme = "dark";
+    styleSheet.insertRule(
+      ".mq-cursor {border-color: white !important;}",
+      styleSheet.length - 1
+    );
     switchIcon("moon", "sun");
   }
 };
