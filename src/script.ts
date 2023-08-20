@@ -1,3 +1,6 @@
+import type { Direction, MQ, MathField, MathQuillType } from "./mathquill.d.ts";
+declare const MathQuill: MathQuillType;
+
 const styleSheet = document.getElementsByTagName("style")[0].sheet;
 const mathArea = document.getElementById("math-area");
 const clearBtn = document.getElementById("clear-btn");
@@ -5,37 +8,65 @@ const addBtn = document.getElementById("add-btn");
 const themeBtn = document.getElementById("theme-btn");
 const root = document.documentElement;
 
-const MQ = MathQuill.getInterface(2);
-const fields = [];
+const MQ = MathQuill.getInterface(2) as MQ;
+const fields: MathField[] = [];
 let editHistory = [];
+let selectedField: MathField;
 
-const getFieldIndex = (field) => {
+const getAppState = () => {
+  console.log(
+    editHistory.map((item, index) => {
+      return {
+        latex: item.at(-1),
+        editHistory: item,
+        isFocused: getFieldIndex(fields[index]) == getFieldIndex(selectedField),
+      };
+    })
+  );
+};
+
+const getFieldIndex = (field: MathField) => {
   return fields.findIndex((item) => item.id == field.id);
 };
 
-const getHistory = (field) => {
+const getHistory = (field: MathField) => {
   const index = getFieldIndex(field);
   return editHistory[index];
 };
 
-const updateHistory = (field) => {
+const updateHistory = (field: MathField) => {
+  // if field is not deleted
   if (getFieldIndex(field) !== -1) {
     const historyArray = getHistory(field);
+
+    // if latex not already saved in history
     if (historyArray.at(-1) != field.latex()) {
       historyArray.push(field.latex());
     }
+
+    selectedField = field;
+    getAppState();
   }
 };
 
-const deleteLine = (dir, field) => {
+const deleteLine = (dir: Direction, field: MathField) => {
   if (fields.length > 1) {
+    const position = getFieldIndex(field);
+
     if (dir == MQ.L) mathArea.removeChild(field.el());
-    fields[getFieldIndex(field) - 1].focus();
-    fields.pop();
+
+    const previousField = fields[getFieldIndex(field) - 1];
+
+    previousField.focus();
+    fields.splice(position, 1);
+    editHistory.splice(position, 1);
+
+    selectedField = previousField;
+    getAppState();
   }
 };
 
-const newLine = (field) => {
+const newLine = (field?: MathField) => {
   const position = getFieldIndex(field);
   const nextField = document.createElement("span");
   nextField.className = "field";
@@ -51,48 +82,50 @@ const newLine = (field) => {
       deleteOutOf: deleteLine,
     },
   });
-  fields.push(newField);
+  fields.splice(position + 1, 0, newField);
   editHistory.push([""]);
   newField.focus();
+
+  selectedField = newField;
+  getAppState();
 };
 newLine();
+addBtn.onclick = () => {
+  newLine(selectedField);
+};
 
 clearBtn.onclick = () => {
-  for (i = fields.length - 1; i > 0; i--) deleteLine(MQ.L, fields[i]);
+  for (let i = fields.length - 1; i > 0; i--) deleteLine(MQ.L, fields[i]);
   fields[0].focus();
   fields[0].latex("");
 };
 
-const switchIcon = (oldIcon, newIcon) =>
-  (themeBtn.firstChild.className = themeBtn.firstChild.className.replace(
-    oldIcon,
-    newIcon
-  ));
+const switchIcon = (oldIcon: string, newIcon: string) =>
+  (themeBtn.firstElementChild.className =
+    themeBtn.firstElementChild.className.replace(oldIcon, newIcon));
 
 themeBtn.onclick = () => {
   if (root.style.colorScheme == "dark") {
     root.style.colorScheme = "light";
-    styleSheet.deleteRule(styleSheet.length - 1);
+    styleSheet.deleteRule(0);
     switchIcon("sun", "moon");
   } else {
     root.style.colorScheme = "dark";
-    styleSheet.insertRule(
-      ".mq-cursor {border-color: white !important;}",
-      styleSheet.length - 1
-    );
+    styleSheet.insertRule(".mq-cursor {border-color: white !important;}", 0);
     switchIcon("moon", "sun");
   }
 };
 
-addBtn.onclick = newLine;
-
-window.onkeydown = (event) => {
+// undo detection
+window.onkeydown = (event: KeyboardEvent) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "z") {
-    const selectedField = fields.find((field) =>
+    selectedField = fields.find((field) =>
       field.el().className.includes("mq-focused")
     );
 
     const historyArray = getHistory(selectedField);
+
+    getAppState();
     if (historyArray.length > 1) {
       historyArray.pop();
       selectedField.latex(historyArray.at(-1));
@@ -100,6 +133,7 @@ window.onkeydown = (event) => {
   }
 };
 
+// fix button formatting for chrome / firefox
 if (
   navigator.userAgent.includes("Chrome") ||
   !navigator.userAgent.includes("Safari")

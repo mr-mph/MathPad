@@ -1,0 +1,14 @@
+{
+  "name": "mathpad",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "keywords": [],
+  "author": "mr-mph",
+  "license": "ISC",
+  "description": ""
+}
