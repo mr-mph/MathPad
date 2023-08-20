@@ -7,7 +7,6 @@ const root = document.documentElement;
 
 const MQ = MathQuill.getInterface(2);
 const fields = [];
-let currentlySelected;
 let editHistory = [];
 
 const getFieldIndex = (field) => {
@@ -21,7 +20,6 @@ const getHistory = (field) => {
 
 const updateHistory = (field) => {
   if (getFieldIndex(field) !== -1) {
-    currentlySelected = field;
     const historyArray = getHistory(field);
     if (historyArray.at(-1) != field.latex()) {
       historyArray.push(field.latex());
@@ -54,7 +52,6 @@ const newLine = (field) => {
     },
   });
   fields.push(newField);
-  currentlySelected = newField;
   editHistory.push([""]);
   newField.focus();
 };
@@ -91,10 +88,14 @@ addBtn.onclick = newLine;
 
 window.onkeydown = (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "z") {
-    const historyArray = getHistory(currentlySelected);
+    const selectedField = fields.find((field) =>
+      field.el().className.includes("mq-focused")
+    );
+
+    const historyArray = getHistory(selectedField);
     if (historyArray.length > 1) {
       historyArray.pop();
-      currentlySelected.latex(historyArray.at(-1));
+      selectedField.latex(historyArray.at(-1));
     }
   }
 };
