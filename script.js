@@ -87,3 +87,12 @@ window.onkeydown = (event) => {
     }
   }
 };
+
+if (
+  navigator.userAgent.includes("Chrome") ||
+  !navigator.userAgent.includes("Safari")
+) {
+  document.querySelectorAll("button").forEach((button) => {
+    button.className = "chrome-button";
+  });
+}
