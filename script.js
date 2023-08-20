@@ -42,7 +42,7 @@ const newLine = (field) => {
   const nextField = document.createElement("span");
   nextField.className = "field";
   mathArea.appendChild(nextField);
-  if (position > 0) {
+  if (fields.length > 0) {
     fields[position].el().after(nextField);
   }
 
