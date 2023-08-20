@@ -10,31 +10,42 @@ const fields = [];
 let currentlySelected;
 let editHistory = [];
 
+const getFieldIndex = (field) => {
+  return fields.findIndex((item) => item.id == field.id);
+};
+
 const getHistory = (field) => {
-  const index = fields.findIndex((item) => item.id == field.id);
+  const index = getFieldIndex(field);
   return editHistory[index];
 };
 
 const updateHistory = (field) => {
-  currentlySelected = field;
-  const historyArray = getHistory(field);
-  if (historyArray.at(-1) != field.latex()) {
-    historyArray.push(field.latex());
+  if (getFieldIndex(field) !== -1) {
+    currentlySelected = field;
+    const historyArray = getHistory(field);
+    if (historyArray.at(-1) != field.latex()) {
+      historyArray.push(field.latex());
+    }
   }
 };
 
 const deleteLine = (dir, field) => {
   if (fields.length > 1) {
     if (dir == MQ.L) mathArea.removeChild(field.el());
-    fields[fields.findIndex((item) => item.id == field.id) - 1].focus();
+    fields[getFieldIndex(field) - 1].focus();
     fields.pop();
   }
 };
 
-const newLine = () => {
+const newLine = (field) => {
+  const position = getFieldIndex(field);
   const nextField = document.createElement("span");
   nextField.className = "field";
   mathArea.appendChild(nextField);
+  if (position > 0) {
+    fields[position].el().after(nextField);
+  }
+
   const newField = MQ.MathField(nextField, {
     handlers: {
       edit: updateHistory,
@@ -43,6 +54,7 @@ const newLine = () => {
     },
   });
   fields.push(newField);
+  currentlySelected = newField;
   editHistory.push([""]);
   newField.focus();
 };
@@ -83,7 +95,6 @@ window.onkeydown = (event) => {
     if (historyArray.length > 1) {
       historyArray.pop();
       currentlySelected.latex(historyArray.at(-1));
-      console.log(editHistory);
     }
   }
 };
