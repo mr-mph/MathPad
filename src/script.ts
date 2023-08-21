@@ -13,16 +13,17 @@ const fields: MathField[] = [];
 let editHistory = [];
 let selectedField: MathField;
 
-const getAppState = () => {
-  console.log(
-    editHistory.map((item, index) => {
-      return {
-        latex: item.at(-1),
-        editHistory: item,
-        isFocused: getFieldIndex(fields[index]) == getFieldIndex(selectedField),
-      };
-    })
-  );
+const debugAppState = () => {
+  // console.log(
+  //   editHistory.map((item, index) => {
+  //     return {
+  //       latex: item.at(-1),
+  //       editHistory: item,
+  //       isFocused: getFieldIndex(fields[index]) == getFieldIndex(selectedField),
+  //     };
+  //   })
+  // );
+  // console.log(editHistory);
 };
 
 const getFieldIndex = (field: MathField) => {
@@ -45,7 +46,7 @@ const updateHistory = (field: MathField) => {
     }
 
     selectedField = field;
-    getAppState();
+    debugAppState();
   }
 };
 
@@ -62,7 +63,7 @@ const deleteLine = (dir: Direction, field: MathField) => {
     editHistory.splice(position, 1);
 
     selectedField = previousField;
-    getAppState();
+    debugAppState();
   }
 };
 
@@ -83,11 +84,11 @@ const newLine = (field?: MathField) => {
     },
   });
   fields.splice(position + 1, 0, newField);
-  editHistory.push([""]);
+  editHistory.splice(position + 1, 0, [""]);
   newField.focus();
 
   selectedField = newField;
-  getAppState();
+  debugAppState();
 };
 newLine();
 addBtn.onclick = () => {
@@ -119,13 +120,15 @@ themeBtn.onclick = () => {
 // undo detection
 window.onkeydown = (event: KeyboardEvent) => {
   if ((event.ctrlKey || event.metaKey) && event.key === "z") {
+    event.preventDefault();
+
     selectedField = fields.find((field) =>
       field.el().className.includes("mq-focused")
     );
 
     const historyArray = getHistory(selectedField);
 
-    getAppState();
+    debugAppState();
     if (historyArray.length > 1) {
       historyArray.pop();
       selectedField.latex(historyArray.at(-1));
