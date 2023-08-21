@@ -1,4 +1,4 @@
-import type { Direction, MQ, MathField, MathQuillType } from "./mathquill.d.ts";
+import type { Direction, MQ, MathField, MathQuillType } from "./mathquill.js";
 declare const MathQuill: MathQuillType;
 
 const styleSheet = document.getElementsByTagName("style")[0].sheet;
