@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "SOURCEMAP=true npx rollup -c -w",
+    "dev": "DEV=true npx rollup -c -w",
     "build": "npx rollup -c"
   },
   "keywords": [],
