@@ -110,9 +110,11 @@ const switchScheme = (scheme: "light" | "dark") => {
   if (scheme == "dark") {
     root.style.colorScheme = "dark";
     styleSheet.insertRule(".mq-cursor {border-color: white !important;}", 0);
+    styleSheet.insertRule("button:hover { filter: brightness(0.9)}", 0);
     switchIcon("moon", "sun");
   } else {
     root.style.colorScheme = "light";
+    styleSheet.deleteRule(0);
     styleSheet.deleteRule(0);
     switchIcon("sun", "moon");
   }
