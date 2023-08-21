@@ -101,19 +101,33 @@ clearBtn.onclick = () => {
   fields[0].latex("");
 };
 
-const switchIcon = (oldIcon: string, newIcon: string) =>
-  (themeBtn.firstElementChild.className =
-    themeBtn.firstElementChild.className.replace(oldIcon, newIcon));
+const switchIcon = (oldIcon: string, newIcon: string) => {
+  const image = themeBtn.firstElementChild;
+  image.className = image.className.replace(oldIcon, newIcon);
+};
 
-themeBtn.onclick = () => {
-  if (root.style.colorScheme == "dark") {
-    root.style.colorScheme = "light";
-    styleSheet.deleteRule(0);
-    switchIcon("sun", "moon");
-  } else {
+const switchScheme = (scheme: "light" | "dark") => {
+  if (scheme == "dark") {
     root.style.colorScheme = "dark";
     styleSheet.insertRule(".mq-cursor {border-color: white !important;}", 0);
     switchIcon("moon", "sun");
+  } else {
+    root.style.colorScheme = "light";
+    styleSheet.deleteRule(0);
+    switchIcon("sun", "moon");
+  }
+};
+
+// if system dark mode
+if (window.matchMedia("(prefers-color-scheme: dark)")?.matches) {
+  switchScheme("dark");
+}
+
+themeBtn.onclick = () => {
+  if (root.style.colorScheme == "dark") {
+    switchScheme("light");
+  } else {
+    switchScheme("dark");
   }
 };
 
