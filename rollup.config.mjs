@@ -1,4 +1,4 @@
-import copy from "rollup-plugin-copy";
+import copy from "rollup-plugin-copy-watch";
 import typescript from "rollup-plugin-typescript2";
 
 export default {
@@ -15,6 +15,7 @@ export default {
         { src: "src/index.html", dest: "public" },
         { src: "src/style.css", dest: "public" },
       ],
+      watch: "src",
     }),
   ],
 };

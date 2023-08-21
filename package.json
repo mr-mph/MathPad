@@ -13,7 +13,7 @@
   "description": "",
   "dependencies": {
     "rollup": "^3.28.0",
-    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-copy-watch": "^0.0.1",
     "rollup-plugin-typescript2": "^0.35.0",
     "typescript": "^5.1.6"
   }
