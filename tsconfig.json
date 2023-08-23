@@ -6,7 +6,8 @@
     "sourceMap": true,
     "outDir": "public",
     "removeComments": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "strict": false
   },
   "include": ["./src/**/*"]
 }

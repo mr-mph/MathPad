@@ -1,6 +1,7 @@
 import UndoManager, { editHistory } from "./UndoManager";
 import ThemeManager from "./ThemeManager";
 import FieldManager, { fields } from "./FieldManager";
+import Utils from "./Utils";
 
 export const styleSheet = document.getElementsByTagName("style")[0].sheet;
 export const mathArea = document.getElementById("math-area");
@@ -12,12 +13,10 @@ const clearBtn = document.getElementById("clear-btn");
 const addBtn = document.getElementById("add-btn");
 
 export const debugAppState = () => {
-  // console.log({
-  //   editHistory,
-  //   fields,
-  // });
+  console.log(fields);
 };
 
+// init first field
 FieldManager.newLine();
 
 addBtn.onclick = () => {
@@ -26,10 +25,10 @@ addBtn.onclick = () => {
 
 clearBtn.onclick = () => {
   for (let i = fields.length - 1; i > 0; i--) {
-    FieldManager.deleteLine(-1, fields[i]); // -1 is MQ.L
+    FieldManager.deleteLine(fields[i]);
   }
-  fields[0].focus();
-  fields[0].latex("");
+  fields[0].MQField.focus();
+  fields[0].MQField.latex("");
 };
 
 // if system dark mode
@@ -45,12 +44,23 @@ themeBtn.onclick = () => {
   }
 };
 
-// undo detection
 window.onkeydown = (event: KeyboardEvent) => {
+  // undo detection
   if ((event.ctrlKey || event.metaKey) && event.key === "z") {
     event.preventDefault();
 
     UndoManager.undo();
+  }
+
+  // up/down arrow navigation
+  if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+    const position = Utils.getFieldIndex(FieldManager.getSelectedField());
+
+    if (event.key === "ArrowUp" && position > 0) {
+      fields[position - 1].MQField.focus();
+    } else if (event.key === "ArrowDown" && position < fields.length - 1) {
+      fields[position + 1].MQField.focus();
+    }
   }
 };
 

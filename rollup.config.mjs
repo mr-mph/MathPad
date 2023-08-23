@@ -8,6 +8,7 @@ export default {
   output: {
     file: "public/bundle.js",
     format: "iife", // Immediately Invoked Function Expression
+    name: "bundle",
     sourcemap: devMode,
   },
   plugins: [
