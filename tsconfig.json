@@ -7,7 +7,7 @@
     "outDir": "public",
     "removeComments": true,
     "rootDir": "src",
-    "strict": false
+    "strict": true
   },
   "include": ["./src/**/*"]
 }

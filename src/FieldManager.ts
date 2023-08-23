@@ -21,7 +21,7 @@ export default class FieldManager {
   };
 
   static newLine = (field?: Field) => {
-    const position = fields.length > 0 ? Utils.getFieldIndex(field) : 0;
+    const position = field ? Utils.getFieldIndex(field) : 0;
 
     const newField = new Field(position);
 
@@ -39,7 +39,7 @@ export default class FieldManager {
 
       Utils.removeField(position);
 
-      mathArea.removeChild(field.MQField.el());
+      mathArea && mathArea.removeChild(field.MQField.el());
 
       previousField.MQField.focus();
       FieldManager.updateLastSelectedField(previousField);

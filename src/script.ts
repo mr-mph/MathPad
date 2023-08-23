@@ -19,30 +19,33 @@ export const debugAppState = () => {
 // init first field
 FieldManager.newLine();
 
-addBtn.onclick = () => {
-  FieldManager.newLine();
-};
+if (addBtn)
+  addBtn.onclick = () => {
+    FieldManager.newLine();
+  };
 
-clearBtn.onclick = () => {
-  for (let i = fields.length - 1; i > 0; i--) {
-    FieldManager.deleteLine(fields[i]);
-  }
-  fields[0].MQField.focus();
-  fields[0].MQField.latex("");
-};
+if (clearBtn)
+  clearBtn.onclick = () => {
+    for (let i = fields.length - 1; i > 0; i--) {
+      FieldManager.deleteLine(fields[i]);
+    }
+    fields[0].MQField.focus();
+    fields[0].MQField.latex("");
+  };
 
 // if system dark mode
 if (window.matchMedia("(prefers-color-scheme: dark)")?.matches) {
   ThemeManager.switchTheme("dark");
 }
 
-themeBtn.onclick = () => {
-  if (root.style.colorScheme == "dark") {
-    ThemeManager.switchTheme("light");
-  } else {
-    ThemeManager.switchTheme("dark");
-  }
-};
+if (themeBtn)
+  themeBtn.onclick = () => {
+    if (root.style.colorScheme == "dark") {
+      ThemeManager.switchTheme("light");
+    } else {
+      ThemeManager.switchTheme("dark");
+    }
+  };
 
 window.onkeydown = (event: KeyboardEvent) => {
   // undo detection
