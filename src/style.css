@@ -43,3 +43,8 @@ button:hover {
 .mq-editable-field {
   border-radius: 3px !important;
 }
+
+.mq-focused {
+  position: relative;
+  z-index: 2;
+}
