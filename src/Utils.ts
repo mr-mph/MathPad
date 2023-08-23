@@ -1,6 +1,4 @@
-import { MathField } from "./mathquill";
 import { fields } from "./FieldManager";
-import { editHistory } from "./UndoManager";
 import Field from "./Field";
 
 export default class Utils {

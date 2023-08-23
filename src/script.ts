@@ -1,4 +1,4 @@
-import UndoManager, { editHistory } from "./UndoManager";
+import UndoManager from "./UndoManager";
 import ThemeManager from "./ThemeManager";
 import FieldManager, { fields } from "./FieldManager";
 import Utils from "./Utils";
@@ -13,7 +13,7 @@ const clearBtn = document.getElementById("clear-btn");
 const addBtn = document.getElementById("add-btn");
 
 export const debugAppState = () => {
-  console.log(fields);
+  // console.log(fields);
 };
 
 // init first field

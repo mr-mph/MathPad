@@ -1,5 +1,4 @@
 import FieldManager, { fields } from "./FieldManager";
-import UndoManager from "./UndoManager";
 import { debugAppState, mathArea } from "./script";
 
 import type { MQ, MathQuillType, MathField } from "./mathquill.d.ts";

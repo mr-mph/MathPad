@@ -1,10 +1,9 @@
 import { mathArea, debugAppState } from "./script";
-import UndoManager from "./UndoManager";
 import Utils from "./Utils";
 
 import Field from "./Field";
 
-import type { Direction, MQ, MathField, MathQuillType } from "./mathquill.d.ts";
+import type { MQ, MathQuillType } from "./mathquill.d.ts";
 declare const MathQuill: MathQuillType;
 
 const MQ = MathQuill.getInterface(2) as MQ;

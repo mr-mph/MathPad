@@ -1,6 +1,4 @@
-import FieldManager, { fields } from "./FieldManager";
-import Utils from "./Utils";
-import { MathField } from "./mathquill";
+import FieldManager from "./FieldManager";
 import { debugAppState } from "./script";
 
 export let editHistory: string[][] = [];
