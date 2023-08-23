@@ -13,7 +13,7 @@ export default class UndoManager {
       historyArray.pop();
 
       const prevLatex = historyArray.at(-1);
-      if (prevLatex) selectedField.MQField.latex(prevLatex);
+      prevLatex != undefined && selectedField.MQField.latex(prevLatex);
     }
 
     debugAppState();
