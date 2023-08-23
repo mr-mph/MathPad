@@ -1,4 +1,4 @@
-# mathpad
+# MathPad
 A latex notepad built using Typescript and MathQuill
 
 # Usage
