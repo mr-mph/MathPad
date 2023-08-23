@@ -21,7 +21,7 @@ export default class FieldManager {
   };
 
   static newLine = (field?: Field) => {
-    const position = field ? Utils.getFieldIndex(field) : 0;
+    const position = field ? Utils.getFieldIndex(field) : fields.length - 1;
 
     const newField = new Field(position);
 
