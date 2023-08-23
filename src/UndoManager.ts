@@ -1,8 +1,6 @@
 import FieldManager from "./FieldManager";
 import { debugAppState } from "./script";
 
-export let editHistory: string[][] = [];
-
 export default class UndoManager {
   static undo = () => {
     const selectedField = FieldManager.getSelectedField();
