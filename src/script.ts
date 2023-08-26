@@ -4,7 +4,9 @@ import FieldManager, { fields } from "./FieldManager";
 import Utils from "./Utils";
 
 export const styleSheet = document.getElementsByTagName("style")[0].sheet;
+
 export const mathArea = document.getElementById("math-area");
+
 export const root = document.documentElement;
 
 export const themeBtn = document.getElementById("theme-btn");
@@ -19,12 +21,15 @@ export const debugAppState = () => {
 // init first field
 FieldManager.newLine();
 
-if (addBtn)
+if (addBtn) {
   addBtn.onclick = () => {
     FieldManager.newLine();
   };
+} else {
+  throw new Error("addBtn is null");
+}
 
-if (clearBtn)
+if (clearBtn) {
   clearBtn.onclick = () => {
     for (let i = fields.length - 1; i > 0; i--) {
       FieldManager.deleteLine(fields[i]);
@@ -32,13 +37,16 @@ if (clearBtn)
     fields[0].MQField.focus();
     fields[0].MQField.latex("");
   };
+} else {
+  throw new Error("clearBtn is null");
+}
 
 // if system dark mode
 if (window.matchMedia("(prefers-color-scheme: dark)")?.matches) {
   ThemeManager.switchTheme("dark");
 }
 
-if (themeBtn)
+if (themeBtn) {
   themeBtn.onclick = () => {
     if (root.style.colorScheme == "dark") {
       ThemeManager.switchTheme("light");
@@ -46,6 +54,9 @@ if (themeBtn)
       ThemeManager.switchTheme("dark");
     }
   };
+} else {
+  throw new Error("themeBtn is null");
+}
 
 window.onkeydown = (event: KeyboardEvent) => {
   // undo detection

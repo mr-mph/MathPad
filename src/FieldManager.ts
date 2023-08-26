@@ -39,7 +39,7 @@ export default class FieldManager {
 
       Utils.removeField(position);
 
-      mathArea && mathArea.removeChild(field.MQField.el());
+      mathArea?.removeChild(field.MQField.el());
 
       previousField.MQField.focus();
       FieldManager.updateLastSelectedField(previousField);

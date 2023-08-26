@@ -13,7 +13,7 @@ export default class Field {
   constructor(position: number) {
     const newField = document.createElement("span");
     newField.className = "field";
-    mathArea && mathArea.appendChild(newField);
+    mathArea?.appendChild(newField);
 
     if (fields.length > 0) {
       fields[position].MQField.el().after(newField);
