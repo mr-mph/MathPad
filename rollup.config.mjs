@@ -17,6 +17,7 @@ export default {
       targets: [
         { src: "src/index.html", dest: "public" },
         { src: "src/style.css", dest: "public" },
+        { src: "src/assets", dest: "public" },
       ],
       watch: devMode && "src",
     }),
