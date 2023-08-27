@@ -1,7 +1,7 @@
-import UndoManager from "./UndoManager";
-import ThemeManager from "./ThemeManager";
-import FieldManager, { fields } from "./FieldManager";
-import Utils from "./Utils";
+import UndoManager from "./util/UndoManager";
+import ThemeManager from "./util/ThemeManager";
+import FieldManager, { fields } from "./util/FieldManager";
+import Utils from "./util/Utils";
 
 export const styleSheet = document.getElementsByTagName("style")[0].sheet;
 

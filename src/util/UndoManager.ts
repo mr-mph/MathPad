@@ -1,5 +1,5 @@
 import FieldManager from "./FieldManager";
-import { debugAppState } from "./script";
+import { debugAppState } from "../script";
 
 export default class UndoManager {
   static undo = () => {

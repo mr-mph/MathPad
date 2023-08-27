@@ -1,9 +1,9 @@
-import { mathArea, debugAppState } from "./script";
+import { mathArea, debugAppState } from "../script";
 import Utils from "./Utils";
 
 import Field from "./Field";
 
-import type { MQ, MathQuillType } from "./mathquill.d.ts";
+import type { MQ, MathQuillType } from "./mathquill";
 declare const MathQuill: MathQuillType;
 
 const MQ = MathQuill.getInterface(2) as MQ;

@@ -1,4 +1,4 @@
-import { themeBtn, root, styleSheet } from "./script";
+import { themeBtn, root, styleSheet } from "../script";
 
 export default class ThemeManager {
   static switchIcon = (oldIcon: string, newIcon: string) => {
